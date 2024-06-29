@@ -1,0 +1,25 @@
+{
+  "production": true,
+  "application": {
+    "baseUrl":"http://localhost:4200",
+    "name": "CityHome",
+    "logoUrl": ""
+  },
+  "oAuthConfig": {
+    "issuer": "https://localhost:44354/",
+    "redirectUri": "http://localhost:4200",
+    "clientId": "CityHome_App",
+    "responseType": "code",
+    "scope": "offline_access openid profile email phone CityHome"
+  },
+  "apis": {
+    "default": {
+      "url": "https://localhost:44354",
+      "rootNamespace": "CityHome"
+    },
+    "AbpAccountPublic": {
+      "url": "https://localhost:44354",
+      "rootNamespace": "AbpAccountPublic"
+    }
+  }
+}
