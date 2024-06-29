@@ -1,0 +1,51 @@
+<div class="pg-member-form">
+    <h2>{{ pgMemberId ? 'Edit' : 'New' }} PG Member</h2>
+    <form [formGroup]="pgMemberForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="name">Name</label>
+        <input id="name" formControlName="name" />
+      </div>
+      <div>
+        <label for="mobileNumber">Mobile Number</label>
+        <input id="mobileNumber" formControlName="mobileNumber" />
+      </div>
+      <div>
+        <label for="email">Email</label>
+        <input id="email" formControlName="email" type="email" />
+      </div>
+      <div>
+        <label for="rent">Rent</label>
+        <input id="rent" formControlName="rent" type="number" />
+      </div>
+      <div>
+        <label for="depositAmount">Deposit Amount</label>
+        <input id="depositAmount" formControlName="depositAmount" type="number" />
+      </div>
+      <div>
+        <label for="jobLocation">Job Location</label>
+        <textarea id="jobLocation" formControlName="jobLocation.addressLine1"></textarea>
+      </div>
+      <div>
+        <label for="permanentAddressId">Permanent Address ID</label>
+        <input id="permanentAddressId" formControlName="permanentAddressId" />
+      </div>
+      <div>
+        <label for="dateOfJoining">Date of Joining</label>
+        <input id="dateOfJoining" formControlName="dateOfJoining" type="date" />
+      </div>
+      <div>
+        <label for="parentNumber">Parent Number</label>
+        <input id="parentNumber" formControlName="parentNumber" />
+      </div>
+      <!-- <div>
+        <label for="signature">Signature</label>
+        <input id="signature" formControlName="signature" type="file" />
+      </div> -->
+        <!-- <div>
+          <label for="pgId">PG ID</label>
+          <input id="pgId" formControlName="pgId" />
+        </div> -->
+      <button type="submit">{{ pgMemberId ? 'Update' : 'Add' }}</button>
+    </form>
+  </div>
+  
