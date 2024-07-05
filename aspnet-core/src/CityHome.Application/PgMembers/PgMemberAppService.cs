@@ -37,6 +37,8 @@ namespace CityHome.PgMembers
             try
             {
                 var pgMember = _mapper.Map<CreateUpdatePgMemberDto, PgMember>(input);
+                pgMember.JobLocationId = input.JobLocation.Id;
+                pgMember.PermanentAddressId = input.PermanentAddress.Id;
                 await _pgMemberRepository.InsertAsync(pgMember);
                 return _mapper.Map<PgMember, PgMemberDto>(pgMember);
             }

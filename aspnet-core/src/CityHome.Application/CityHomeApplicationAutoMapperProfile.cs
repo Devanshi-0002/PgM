@@ -19,11 +19,17 @@ public class CityHomeApplicationAutoMapperProfile : Profile
         CreateMap<CreateUpdatePgDto, Pg>();
 
         CreateMap<Address, AddressDto>();
+        CreateMap<AddressDto, Address>();
         CreateMap<CreateUpdateAddressDto, AddressDto>();
+
+
+        CreateMap<CreateUpdatePgDto, Pg>();
+
+        
        // CreateMap<AddressDto, Address>();
 
 
-        
-        
+
+
     }
 }
