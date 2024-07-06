@@ -30,7 +30,7 @@ namespace CityHome.PgMembers
             return await dbSet
                 .WhereIf(
                     !filter.IsNullOrWhiteSpace(),
-                    PgMember => PgMember.Name.Contains(filter)
+                    PgMember => PgMember.FullName.Contains(filter)
                     )
                 .OrderBy(sorting)
                 .Skip(skipCount)

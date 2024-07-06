@@ -7,7 +7,7 @@ using Volo.Abp.Data;
 using Volo.Abp.Modularity;
 using Volo.Abp.Threading;
 
-namespace Pg.CityHome;
+namespace CityHome;
 
 [DependsOn(
     typeof(AbpAutofacModule),

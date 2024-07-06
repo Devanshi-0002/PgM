@@ -8,20 +8,29 @@ namespace CityHome.PgMembers
 {
     public class CreateUpdatePgMemberDto
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
+        public string FullName { get; set; }
+
         public string MobileNumber { get; set; }
+
         public string Email { get; set; }
-        public decimal Rent { get; set; }
-        public decimal DepositAmount { get; set; }
-        //public Guid? JobLocationId { get; set; }
-        public AddressDto? JobLocation { get; set; }
-        //public Guid? PermanentAddressId { get; set; }
-        public AddressDto? PermanentAddress { get; set; }
+
+        public decimal RentAmount { get; set; }
+
+        public decimal DepositedAmount { get; set; }
+
+        public string? Education { get; set; }
+
+        public string? JobCollegeOtherOption { get; set; }
+
+        public CreateUpdateAddressDto JobCollegeAddress { get; set; }
+
         public DateTime DateOfJoining { get; set; }
-        public string ParentNumber { get; set; }
-       // public byte[] Signature { get; set; }
-        //public Guid? PgId { get; set; }
-        public CreateUpdatePgDto? Pgs { get; set; }
+
+        public CreateUpdateAddressDto PermanentAddress { get; set; }
+
+        public string EmergencyMobileNumber { get; set; }
+
+        public Guid? PgId { get; set; }
+
     }
 }

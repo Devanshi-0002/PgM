@@ -5,10 +5,11 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <RootNamespace>Pg.CityHome</RootNamespace>
+    <RootNamespace>CityHome</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\CityHome.Application\CityHome.Application.csproj" />
     <ProjectReference Include="..\CityHome.Domain.Tests\CityHome.Domain.Tests.csproj" />
   </ItemGroup>
 

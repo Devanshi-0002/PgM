@@ -23,6 +23,7 @@ using CityHome.Addresses;
 using CityHome.Documents;
 using CityHome.Pgs;
 using System.Reflection.Emit;
+using System.Reflection.Metadata;
 
 namespace CityHome.EntityFrameworkCore;
 
@@ -60,8 +61,8 @@ public class CityHomeDbContext :
 
     public DbSet<Pg> Pgs { get; set; }
     public DbSet<PgMember> PgMembers { get; set; }
-    public DbSet<Address> Addresses { get; set; }
     public DbSet<UserDocument> UserDocuments { get; set; }
+    public DbSet<Address> Addresses { get; set; }
 
     // SaaS
     public DbSet<Tenant> Tenants { get; set; }
@@ -99,28 +100,31 @@ public class CityHomeDbContext :
 
         builder.Entity<Pg>(b =>
         {
-            b.ToTable(CityHomeConsts.DbTablePrefix + "Pgs",
-                CityHomeConsts.DbSchema);
-            b.ConfigureByConvention();
-            b.Property(x => x.PgName).IsRequired().HasMaxLength(128);
+            b.ToTable("Pgs");
+            b.ConfigureByConvention(); //auto configure for the base class props
+            b.HasMany(x => x.PgMembers).WithOne(x => x.Pg).HasForeignKey(x => x.PgId);
         });
 
-        builder.Entity<PgMember>()
-           .HasOne(p => p.JobLocation)
-           .WithMany()
-           .HasForeignKey(p => p.JobLocationId)
-           .OnDelete(DeleteBehavior.NoAction);  
+        builder.Entity<PgMember>(b =>
+        {
+            b.ToTable("PgMembers");
+            b.ConfigureByConvention(); //auto configure for the base class props
+            b.HasOne(x => x.JobCollegeAddress).WithOne().HasForeignKey<Address>(x => x.PgMemberId).OnDelete(DeleteBehavior.Cascade);
+            b.HasOne(x => x.PermanentAddress).WithOne().HasForeignKey<Address>(x => x.PgMemberId).OnDelete(DeleteBehavior.Cascade);
+            b.HasMany(x => x.UserDocuments).WithOne(x => x.PgMember).HasForeignKey(x => x.PgMemberId);
+        });
 
-        builder.Entity<PgMember>()
-            .HasOne(p => p.PermanentAddress)
-            .WithMany()
-            .HasForeignKey(p => p.PermanentAddressId)
-            .OnDelete(DeleteBehavior.NoAction);  
+        builder.Entity<UserDocument>(b =>
+        {
+            b.ToTable("UserDocuments");
+            b.ConfigureByConvention(); //auto configure for the base class props
+        });
 
-        builder.Entity<PgMember>()
-            .HasOne(p => p.Pgs)
-            .WithMany()
-            .HasForeignKey(p => p.PgId)
-            .OnDelete(DeleteBehavior.Cascade);
+        builder.Entity<Address>(b =>
+        {
+            b.ToTable("Addresses");
+            b.ConfigureByConvention(); //auto configure for the base class props
+            b.HasOne(x => x.PgMember).WithMany().HasForeignKey(x => x.PgMemberId);
+        });
     }
 }

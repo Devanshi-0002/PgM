@@ -3,7 +3,7 @@ using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.MultiTenancy;
 
-namespace Pg.CityHome;
+namespace CityHome;
 
 public class CityHomeTestDataSeedContributor : IDataSeedContributor, ITransientDependency
 {

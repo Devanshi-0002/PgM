@@ -11,91 +11,72 @@ using AutoMapper;
 using Volo.Abp.ObjectMapping;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.Application.Services;
+using CityHome.Addresses;
 
 
 namespace CityHome.PgMembers
 {
-    public class PgMemberAppService : ApplicationService, IPgMemberAppService
+    public class PgMemberAppService : CrudAppService<
+         PgMember, // The entity type
+         PgMemberDto, // DTO for reading data
+         Guid, // Primary key type (assuming Guid)
+         PagedAndSortedResultRequestDto, // Input DTO for paging and sorting
+         CreateUpdatePgMemberDto, // Input DTO for creating/updating PgMember
+         CreateUpdatePgMemberDto>, // Output DTO for creating/updating PgMember
+         IPgMemberAppService // Service interface
     {
-
-        private readonly IPgMemberRepository _pgMemberRepository;
-        private readonly PgMemberManager _pgMemberManager;
         private readonly IMapper _mapper;
+        private readonly IRepository<Address, Guid> _addressRepository; // Repository for Address entity
 
         public PgMemberAppService(
-            IPgMemberRepository pgMemberRepository,
-            PgMemberManager pgMemberManager,
-            IMapper mapper)
+            IRepository<PgMember, Guid> repository,
+            IMapper mapper,
+            IRepository<Address, Guid> addressRepository)
+            : base(repository)
         {
-            _pgMemberRepository = pgMemberRepository;
-            _pgMemberManager = pgMemberManager;
             _mapper = mapper;
+            _addressRepository = addressRepository;
         }
 
-        public async Task<PgMemberDto> CreateAsync(CreateUpdatePgMemberDto input)
+        public override async Task<PgMemberDto> CreateAsync(CreateUpdatePgMemberDto input)
         {
             try
             {
+                // Map CreateUpdatePgMemberDto to PgMember entity
                 var pgMember = _mapper.Map<CreateUpdatePgMemberDto, PgMember>(input);
-                pgMember.JobLocationId = input.JobLocation.Id;
-                pgMember.PermanentAddressId = input.PermanentAddress.Id;
-                await _pgMemberRepository.InsertAsync(pgMember);
-                return _mapper.Map<PgMember, PgMemberDto>(pgMember);
+
+                // Map JobCollegeAddress and PermanentAddress if provided
+                if (input.JobCollegeAddress != null)
+                {
+                    pgMember.JobCollegeAddress = _mapper.Map<CreateUpdateAddressDto, Address>(input.JobCollegeAddress);
+                    await _addressRepository.InsertAsync(pgMember.JobCollegeAddress);
+                }
+
+                if (input.PermanentAddress != null)
+                {
+                    pgMember.PermanentAddress = _mapper.Map<CreateUpdateAddressDto, Address>(input.PermanentAddress);
+                    await _addressRepository.InsertAsync(pgMember.PermanentAddress);
+                }
+
+                // Add PgMember entity to repository
+                await Repository.InsertAsync(pgMember, autoSave: true);
+
+                // Map PgMember entity back to PgMemberDto and return
+                var pgMemberDto = _mapper.Map<PgMember, PgMemberDto>(pgMember);
+                return pgMemberDto;
             }
             catch (Exception ex)
             {
-                return null;
+                Console.WriteLine(ex.Message);
+                throw;
             }
         }
 
-        public Task DeleteAsync(Guid id)
+        public override async Task<PgMemberDto> UpdateAsync(Guid id, CreateUpdatePgMemberDto input)
         {
-            return _pgMemberRepository.DeleteAsync(id);
+            // Handle update logic here if necessary
+            return await base.UpdateAsync(id, input);
         }
-
-        //public Task<PgMemberDto> GetAsync(Guid id)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        public async Task<PagedResultDto<PgMemberDto>> GetListAsync(GetPgMemberListDto input)
-        {
-            if (input.Sorting.IsNullOrWhiteSpace())
-            {
-                input.Sorting = nameof(PgMember.Name);
-            }
-
-            var pgmembers = await _pgMemberRepository.GetListAsync(
-                input.SkipCount,
-                input.MaxResultCount,
-                input.Sorting,
-                input.Filter
-            );
-
-            var totalCount = input.Filter == null
-                ? await _pgMemberRepository.CountAsync()
-                : await _pgMemberRepository.CountAsync(
-                    pgmember => pgmember.Name.Contains(input.Filter));
-
-            var pgMemberDtos = _mapper.Map<List<PgMember>, List<PgMemberDto>>(pgmembers);
-
-            return new PagedResultDto<PgMemberDto>(
-                totalCount,
-                pgMemberDtos
-            );
-        }
-
-        public async Task<PgMemberDto> UpdateAsync(Guid id, CreateUpdatePgMemberDto input)
-        {
-            var pgMember = await _pgMemberRepository.GetAsync(id);
-            if (pgMember == null)
-            {
-                throw new EntityNotFoundException(typeof(PgMember), id);
-            }
-            _mapper.Map(input, pgMember);
-            await _pgMemberRepository.UpdateAsync(pgMember);
-            return _mapper.Map<PgMember, PgMemberDto>(pgMember);
-        }
-
     }
+
 }

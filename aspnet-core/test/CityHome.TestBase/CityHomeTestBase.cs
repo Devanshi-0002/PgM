@@ -7,7 +7,7 @@ using Volo.Abp.Modularity;
 using Volo.Abp.Uow;
 using Volo.Abp.Testing;
 
-namespace Pg.CityHome;
+namespace CityHome;
 
 public abstract class CityHomeTestBase<TStartupModule> : AbpIntegratedTest<TStartupModule>
     where TStartupModule : IAbpModule

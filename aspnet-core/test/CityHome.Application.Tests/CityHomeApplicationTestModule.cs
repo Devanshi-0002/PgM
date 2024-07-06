@@ -1,6 +1,6 @@
 ﻿using Volo.Abp.Modularity;
 
-namespace Pg.CityHome;
+namespace CityHome;
 
 [DependsOn(
     typeof(CityHomeApplicationModule),

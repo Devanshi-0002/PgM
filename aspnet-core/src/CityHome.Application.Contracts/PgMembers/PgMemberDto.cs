@@ -7,21 +7,9 @@ using Volo.Abp.Application.Dtos;
 
 namespace CityHome.PgMembers
 {
-    public class PgMemberDto : AuditedEntityDto<Guid>
+    public class PgMemberDto : CreateUpdatePgMemberDto
     {
-        public string Name { get; set; }
-        public string MobileNumber { get; set; }
-        public string Email { get; set; }
-        public decimal Rent { get; set; }
-        public decimal DepositAmount { get; set; }
-        public Guid JobLocationId { get; set; }
-        public AddressDto JobLocation { get; set; }
-        public Guid PermanentAddressId { get; set; }
-        public AddressDto PermanentAddress { get; set; }
-        public DateTime DateOfJoining { get; set; }
-        public string ParentNumber { get; set; }
-        //public byte[] Signature { get; set; }
-        public Guid PgId { get; set; }
-        public PgDto Pgs { get; set; }
+        public Guid Id { get; set; }
+        public Guid? PgId { get; set; }
     }
 }

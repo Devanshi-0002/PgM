@@ -8,12 +8,12 @@ using Volo.Abp.Domain.Entities.Auditing;
 
 namespace CityHome.Documents
 {
-    public class UserDocument : AuditedAggregateRoot<Guid>
+    public class UserDocument : FullAuditedAggregateRoot<Guid>
     {
-        public Guid UserId { get; set; }
-        public PgMember User { get; set; }
-        public string AdharCardNumber { get; set; }
-        public byte[] AdharCardFile { get; set; }
-        public byte[] PassportSizePhoto { get; set; }
+        public string DocumentType { get; set; }
+        public string DocumentPath { get; set; }
+
+        public Guid PgMemberId { get; set; }
+        public PgMember PgMember { get; set; }
     }
 }

@@ -6,13 +6,8 @@ using Volo.Abp.Application.Dtos;
 
 namespace CityHome.Pgs
 {
-    public class PgDto : AuditedEntityDto<Guid>
+    public class PgDto : CreateUpdatePgDto
     {
-        public string PgName { get; set; }
-        public int Vacancy { get; set; }
-        public string OwnerName { get; set; }
-        public string OwnerPhoneNumber { get; set; }
-        public Guid PgAddressId { get; set; }
-        public AddressDto PgAddress { get; set; }
+        public Guid Id { get; set; }
     }
 }
