@@ -1,51 +1,117 @@
-<div class="pg-member-form">
-    <h2>{{ pgMemberId ? 'Edit' : 'New' }} PG Member</h2>
-    <form [formGroup]="pgMemberForm" (ngSubmit)="onSubmit()">
-      <div>
-        <label for="name">Name</label>
-        <input id="name" formControlName="name" />
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="text-center">{{ pgMemberId ? 'Edit' : 'New' }} PG Member</h2>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="pgMemberForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label for="fullName">Full Name</label>
+              <input id="fullName" formControlName="fullName" class="form-control"
+                placeholder="FirstName MiddleName LastName" />
+            </div>
+            <div class="form-row" style="display: flex;">
+              <div class="form-group col-md-6 mr-3 mb-3" >
+                <label for="mobileNumber">Mobile Number</label>
+                <input id="mobileNumber" formControlName="mobileNumber" class="form-control"
+                  placeholder="Mobile Number" />
+              </div>
+              <div class="form-group col-md-6 mb-3">
+                <label for="email">Email</label>
+                <input id="email" formControlName="email" type="email" class="form-control" placeholder="Email" />
+              </div>
+            </div>
+
+
+            <div class="form-row" style="display: flex;">
+              <div class="form-group col-md-6" style="margin-right: 5px;">
+                <label for="rentAmount">Rent Amount</label>
+                <input id="rentAmount" formControlName="rentAmount" type="number" class="form-control"
+                  placeholder="Rent amount" />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="depositedAmount">Deposit Amount</label>
+                <input id="depositedAmount" formControlName="depositedAmount" type="number" class="form-control"
+                  placeholder="Deposit amount" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="education">Education</label>
+              <input id="education" formControlName="education" class="form-control" placeholder="Education" />
+            </div>
+            <div class="form-group">
+              <label>Job/College/Other</label>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-check">
+                    <input type="radio" formControlName="jobCollegeOtherOption" value="Job" class="form-check-input"
+                      id="jobOption">
+                    <label class="form-check-label" for="jobOption">Job</label>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-check">
+                    <input type="radio" formControlName="jobCollegeOtherOption" value="College" class="form-check-input"
+                      id="collegeOption">
+                    <label class="form-check-label" for="collegeOption">College</label>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-check">
+                    <input type="radio" formControlName="jobCollegeOtherOption" value="Other" class="form-check-input"
+                      id="otherOption">
+                    <label class="form-check-label" for="otherOption">Other</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div formGroupName="jobCollegeAddress" class="form-group">
+              <label for="jobCollegeAddress">Job/College Location</label>
+              <input id="addressLine1" formControlName="addressLine1" class="form-control"
+                placeholder="Address Line 1" />
+              <input id="addressLine2" formControlName="addressLine2" class="form-control"
+                placeholder="Address Line 2" />
+              <input id="pincode" formControlName="pincode" class="form-control" placeholder="Pincode" />
+              <input id="city" formControlName="city" class="form-control" placeholder="City" />
+              <input id="state" formControlName="state" class="form-control" placeholder="State" />
+            </div>
+            <div formGroupName="permanentAddress" class="form-group">
+              <label for="permanentAddress">Permanent Address</label>
+              <input id="addressLine1" formControlName="addressLine1" class="form-control"
+                placeholder="Address Line 1" />
+              <input id="addressLine2" formControlName="addressLine2" class="form-control"
+                placeholder="Address Line 2" />
+              <input id="pincode" formControlName="pincode" class="form-control" placeholder="Pincode" />
+              <input id="city" formControlName="city" class="form-control" placeholder="City" />
+              <input id="state" formControlName="state" class="form-control" placeholder="State" />
+            </div>
+            <div class="form-row" style="display: flex;">
+              <div class="form-group col-md-6">
+                <label for="dateOfJoining">Date of Joining</label>
+                <input id="dateOfJoining" formControlName="dateOfJoining" type="date" class="form-control" />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="emergencyMobileNumber">Emergency Number</label>
+                <input id="emergencyMobileNumber" formControlName="emergencyMobileNumber" class="form-control" />
+              </div>
+            </div>
+            <!-- Optional fields -->
+            <!--
+            <div class="form-group">
+              <label for="signature">Signature</label>
+              <input id="signature" formControlName="signature" type="file" class="form-control-file"/>
+            </div>
+            <div class="form-group">
+              <label for="pgId">PG ID</label>
+              <input id="pgId" formControlName="pgId" class="form-control"/>
+            </div>
+            -->
+            <button type="submit" class="btn btn-primary">{{ pgMemberId ? 'Update' : 'Add' }}</button>
+          </form>
+        </div>
       </div>
-      <div>
-        <label for="mobileNumber">Mobile Number</label>
-        <input id="mobileNumber" formControlName="mobileNumber" />
-      </div>
-      <div>
-        <label for="email">Email</label>
-        <input id="email" formControlName="email" type="email" />
-      </div>
-      <div>
-        <label for="rent">Rent</label>
-        <input id="rent" formControlName="rent" type="number" />
-      </div>
-      <div>
-        <label for="depositAmount">Deposit Amount</label>
-        <input id="depositAmount" formControlName="depositAmount" type="number" />
-      </div>
-      <div>
-        <label for="jobLocation">Job Location</label>
-        <textarea id="jobLocation" formControlName="jobLocation.addressLine1"></textarea>
-      </div>
-      <div>
-        <label for="permanentAddressId">Permanent Address ID</label>
-        <input id="permanentAddressId" formControlName="permanentAddressId" />
-      </div>
-      <div>
-        <label for="dateOfJoining">Date of Joining</label>
-        <input id="dateOfJoining" formControlName="dateOfJoining" type="date" />
-      </div>
-      <div>
-        <label for="parentNumber">Parent Number</label>
-        <input id="parentNumber" formControlName="parentNumber" />
-      </div>
-      <!-- <div>
-        <label for="signature">Signature</label>
-        <input id="signature" formControlName="signature" type="file" />
-      </div> -->
-        <!-- <div>
-          <label for="pgId">PG ID</label>
-          <input id="pgId" formControlName="pgId" />
-        </div> -->
-      <button type="submit">{{ pgMemberId ? 'Update' : 'Add' }}</button>
-    </form>
+    </div>
   </div>
-  
+</div>

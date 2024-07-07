@@ -22,24 +22,30 @@ export class PgMemberComponent implements OnInit {
     private router: Router
   ) {
     this.pgMemberForm = this.fb.group({
-      name: ['',Validators.required],
-      mobileNumber: ['',Validators.required],
+      fullName: ['', Validators.required],
+      mobileNumber: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      rent: [0, Validators.required],
-      depositAmount: [0, Validators.required],
-      permanentAddressId: [''],
-      dateOfJoining: ['', Validators.required],
-      parentNumber: ['', Validators.required],
-      jobLocation: this.fb.group({
+      rentAmount: [0, Validators.required], // Corrected field name to match backend
+      depositedAmount: [0, Validators.required],
+      education: [''],
+      jobCollegeOtherOption: [''],
+      jobCollegeAddress: this.fb.group({
         addressLine1: ['', Validators.required],
         addressLine2: [''],
-        pincode: [''],
-        city: [''],
-        state: [''],
+        pincode: ['', Validators.required],
+        city: ['', Validators.required],
+        state: ['', Validators.required]
       }),
-      //signature: [''],
-      //pgId: ['', Validators.required],
-     
+      dateOfJoining: ['', Validators.required],
+      permanentAddress: this.fb.group({
+        addressLine1: ['', Validators.required],
+        addressLine2: [''],
+        pincode: ['', Validators.required],
+        city: ['', Validators.required],
+        state: ['', Validators.required]
+      }),
+      emergencyMobileNumber: ['', Validators.required],
+      pgId: ['']
     });
   }
 
@@ -63,6 +69,8 @@ export class PgMemberComponent implements OnInit {
       } else {
         this.pgMembersService.createPgMember(this.pgMemberForm.value).subscribe(() => {
           this.router.navigate(['/pg-members']);
+        }, error => {
+          console.error('Error creating PgMember:', error);
         });
       }
     // }

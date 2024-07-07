@@ -2,28 +2,28 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+export interface Address {
+  addressLine1: string;
+  addressLine2?: string;
+  pincode: string;
+  city: string;
+  state: string;
+}
+
 export interface PgMember {
   id: string;
-  name: string;
+  fullName: string; // Ensure this matches the backend property name
   mobileNumber: string;
   email: string;
-  rent: number;
-  depositAmount: number;
-  jobLocationId: string;
-  permanentAddressId: string;
+  rentAmount: number; // Corrected property name as per your backend
+  depositedAmount: number; // Corrected property name if needed
+  education: string;
+  jobCollegeOtherOption: string;
+  jobCollegeAddress: Address; // Adjust as per your backend structure
   dateOfJoining: Date;
-  parentNumber: string;
-  signature: string;
-  pgId: string;
-  extraProperties: string;
-  concurrencyStamp: string;
-  creationTime: Date;
-  creatorId?: string;
-  lastModificationTime?: Date;
-  lastModifierId?: string;
-  isDeleted: boolean;
-  deleterId?: string;
-  deletionTime?: Date;
+  permanentAddress: Address; // Adjust as per your backend structure
+  emergencyMobileNumber: string;
+  pgId: string | null;
 }
 
 @Injectable({
