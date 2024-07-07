@@ -42,6 +42,13 @@ namespace CityHome.PgMembers
         {
             try
             {
+                var existingMember = await Repository.FirstOrDefaultAsync(x => x.MobileNumber == input.MobileNumber && x.Email == input.Email);
+                if (existingMember != null)
+                {
+                    // If member with same mobile number or email already exists, throw an exception or handle as needed
+                    throw new ApplicationException("You have already added your details.");
+                }
+
                 // Map CreateUpdatePgMemberDto to PgMember entity
                 var pgMember = _mapper.Map<CreateUpdatePgMemberDto, PgMember>(input);
 
